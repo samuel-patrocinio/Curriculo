@@ -1,4 +1,4 @@
-name: Build CV in english
+name: Build CV in portuguese
 
 on: [ workflow_dispatch ]
 
