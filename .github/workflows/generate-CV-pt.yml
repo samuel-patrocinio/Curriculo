@@ -1,0 +1,9 @@
+name: Build CV in english
+
+on: [ workflow_dispatch ]
+
+jobs:
+  build-cv:
+    uses: ./.github/workflows/compile-latex.yml
+    with:
+      main-file: main-pt.tex

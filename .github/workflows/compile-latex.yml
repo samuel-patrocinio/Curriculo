@@ -1,7 +1,15 @@
 name: Compile LaTeX
-on: [ push ]
+on:
+  workflow_call:
+    inputs:
+      main-file:
+        required: true
+        type: string
+
+run-name: Build CV in ${{ inputs.main-file == 'main-pt.tex' && 'portuguese' || 'english' }}
+
 jobs:
-  container:
+  generate-CV:
     runs-on: ubuntu-latest
     container: kjarosh/latex:2024.4
     steps:
@@ -9,10 +17,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build using latexmk
-        run: latexmk -pdf -output-directory=out main.tex
+        run: latexmk -pdf -output-directory=out ${{ inputs.main-file }}
 
       - name: Upload document
         uses: actions/upload-artifact@v4
         with:
           name: main-document
-          path: out/index.pdf
+          path: out/*.pdf
